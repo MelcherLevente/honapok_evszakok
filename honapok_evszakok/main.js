@@ -14,9 +14,20 @@ let months = [
 ];
 
 function start(){
-    let monthID = Number(document.getElementById("monthInput").value) - 1;
+    try{
+        let monthID = Number(document.getElementById("monthInput").value) - 1;
 
-    console.log(`Hónap: ${months[monthID].month}, Évszak: ${months[monthID].season}, Napok száma: ${months[monthID].days}`);
-
-
+        console.log(`Hónap: ${months[monthID].month}, Évszak: ${months[monthID].season}, Napok száma: ${months[monthID].days}`);
+    }
+    catch{
+        if(document.getElementById("monthInput").value <1 || document.getElementById("monthInput").value >12){
+            console.log("Hiba: A hónapszámnak 1 és 12 közé kell esnie!");
+        }
+        else if(isNaN(document.getElementById("monthInput").value)){
+            console.log("Hiba: Nem számot adtál meg!");
+        }
+        else{
+            console.log("Hiba!");
+        }
+    }
 }
