@@ -1,4 +1,3 @@
-let monthInput = document.getElementById("monthInput").value;
 let months = [
     {month: "Január", season: "Tél", days: 31},
     {month: "Február", season: "Tél", days: 28},
@@ -13,3 +12,11 @@ let months = [
     {month: "November", season: "Ősz", days: 30},
     {month: "December", season: "Tél", days: 31}
 ];
+
+function start(){
+    let monthID = Number(document.getElementById("monthInput").value) - 1;
+
+    console.log(`Hónap: ${months[monthID].month}, Évszak: ${months[monthID].season}, Napok száma: ${months[monthID].days}`);
+
+
+}
