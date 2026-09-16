@@ -13,21 +13,26 @@ let months = [
     {month: "December", season: "Tél", days: 31}
 ];
 
+
+function getMonthInfo(monthInput){
+    return months[monthInput - 1];
+}
+
 function start(){
     try{
-        let monthID = Number(document.getElementById("monthInput").value) - 1;
+        let month = Number(document.getElementById("monthInput").value);
 
-        console.log(`Hónap: ${months[monthID].month}, Évszak: ${months[monthID].season}, Napok száma: ${months[monthID].days}`);
+        if(isNaN(month)){
+            throw new Error("Nem számot adtál meg!")
+        }
+        else if(month < 1 || month > 12){
+            throw new Error("A hónapszámnak 1 és 12 közé kell esnie!");
+        }
+        
+        let monthID = getMonthInfo(month);
+        console.log(`Hónap: ${monthID.month}, Évszak: ${monthID.season}, Napok száma: ${monthID.days}`);
     }
-    catch{
-        if(document.getElementById("monthInput").value <1 || document.getElementById("monthInput").value >12){
-            console.log("Hiba: A hónapszámnak 1 és 12 közé kell esnie!");
-        }
-        else if(isNaN(document.getElementById("monthInput").value)){
-            console.log("Hiba: Nem számot adtál meg!");
-        }
-        else{
-            console.log("Hiba!");
-        }
+    catch(error){
+        console.log("Hiba: " + error.message);
     }
 }
