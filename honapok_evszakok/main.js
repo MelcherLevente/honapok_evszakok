@@ -13,13 +13,11 @@ let months = [
     {month: "December", season: "Tél", days: 31, holiday: "Karácsony"}
 ];
 
-
 function getMonthInfo(monthInput){
     return months[monthInput - 1];
 }
 
 function start(){
-    
     try{
         let month = Number(document.getElementById("monthInput").value);
         
@@ -71,18 +69,36 @@ function modifyHoliday(){
         let save = document.createElement("button")
         save.textContent = "Mentés"
         save.onclick = function mentes(){
-            months[month-1].holiday = holidayModify.value
-            let newHoliday = getMonthInfo(month)
-            document.getElementById("outputNewHoliday").textContent = `Új ünnep: ${newHoliday.holiday}`
+            try{
+                const regex = /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s]+$/;
+                
+                if(holidayModify.value == ""){
+                    throw new Error("Ne hagyd üresen!")
+                }
+                else if(!(regex.test(holidayModify.value))){
+                    throw new Error("Az ünnep nevében csak az ábécé kis és/vagy nagybetűi szerepelhetnek!")
+                }
+                else if(regex.test(holidayModify.value)){
+                    months[month-1].holiday = holidayModify.value
+                    let newHoliday = getMonthInfo(month)
+                    document.getElementById("outputNewHoliday").textContent = `Új ünnep: ${newHoliday.holiday}`
+                    
+                    document.getElementById("outputMonth").textContent = `Hónap: ${monthID.month}`
+                    document.getElementById("outputSeason").textContent = `Évszak: ${monthID.season}`
+                    document.getElementById("outputDays").textContent = `Napok száma: ${monthID.days}`
+                }
+                
+            }
+            catch(error){
+                document.getElementById("outputNewHoliday").textContent = "Hiba: " + error.message;
+            }
+            
         }
         document.getElementById("outputHoliday").appendChild(save)
-        document.getElementById("outputNewHoliday").textContent = ""
-        
+        document.getElementById("outputNewHoliday").textContent = "" 
     }
     catch(error){
         outputMonth.textContent = "Hiba: " + error.message;
     }
     document.getElementById("monthInput").value = "";
-    
-
 }
